@@ -37,7 +37,8 @@
           const tr = document.createElement('tr');
           row.forEach(cell => {
             const td = document.createElement('td');
-            td.innerHTML = cell.replace(/<a /g, '<a target="_blank" ');
+            // 링크 클릭 시 페이지 전체가 이동하도록 처리
+            td.innerHTML = cell.replace(/<a /g, '<a onclick="window.location.href=this.href; return false;" ');
             tr.appendChild(td);
           });
           fragment.appendChild(tr);
