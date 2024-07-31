@@ -36,7 +36,7 @@
 
     async function fetchData() {
       try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbwigRlw5gx93BohUC_cUEFN5OHX2N73jcOB_L96ElBFcY_vDwScHSclJz28UdhM5JWP/exec');
+        const response = await fetch('https://script.google.com/macros/s/AKfycbzrPN92MV5aaIouBkIhPj4dfp9UffW27c6i68KyotVhfVcy8GwCO_Km7C2cU3iLd8NS/exec');
         const data = await response.json();
         localStorage.setItem('sheetData', JSON.stringify(data));
         renderTable(data);
