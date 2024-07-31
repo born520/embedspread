@@ -50,6 +50,7 @@
           fragment.appendChild(tr);
         });
 
+        table.innerHTML = ''; // 테이블 초기화
         table.appendChild(fragment);
       } catch (error) {
         console.error('Error fetching data:', error);
