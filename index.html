@@ -47,7 +47,16 @@
     }
 
     function renderTable(data) {
+      if (data.error) {
+        console.error('Error in data:', data.error);
+        return;
+      }
       const { data: tableData, backgrounds, fontColors, mergedCells } = data;
+      console.log('Data:', tableData);
+      console.log('Backgrounds:', backgrounds);
+      console.log('FontColors:', fontColors);
+      console.log('MergedCells:', mergedCells);
+
       const table = document.getElementById('data-table');
       const fragment = document.createDocumentFragment();
 
