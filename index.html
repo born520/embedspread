@@ -42,6 +42,9 @@
     async function fetchData() {
       try {
         const response = await fetch('https://script.google.com/macros/s/AKfycbwS44EmggYIka225Odz6U_i9SZ9oz-Ykd0JzKoHefbry3A7N0T4w6FlKtQasa7or4rL/exec');
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
         const result = await response.json();
         console.log('Fetched data:', result); // JSON 데이터 구조 확인
         localStorage.setItem('sheetData', JSON.stringify(result));
@@ -121,4 +124,14 @@
             }
 
             tr.appendChild(td);
-         
+          }
+        });
+        fragment.appendChild(tr);
+      });
+
+      table.innerHTML = ''; // 테이블 초기화
+      table.appendChild(fragment);
+    }
+  </script>
+</body>
+</html>
