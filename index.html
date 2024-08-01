@@ -28,6 +28,7 @@
     document.addEventListener("DOMContentLoaded", function() {
       const cachedData = localStorage.getItem('sheetData');
       if (cachedData) {
+        console.log('Rendering cached data...');
         renderTable(JSON.parse(cachedData));
       }
       fetchData();
@@ -38,6 +39,7 @@
         const response = await fetch('https://script.google.com/macros/s/AKfycbzrPN92MV5aaIouBkIhPj4dfp9UffW27c6i68KyotVhfVcy8GwCO_Km7C2cU3iLd8NS/exec');
         const result = await response.json();
         localStorage.setItem('sheetData', JSON.stringify(result));
+        console.log('Rendering fetched data...');
         renderTable(result);
       } catch (error) {
         console.error('Error fetching data:', error);
