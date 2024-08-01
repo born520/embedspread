@@ -58,6 +58,11 @@
       console.log('FontColors:', fontColors);
       console.log('MergedCells:', mergedCells);
 
+      if (!tableData || !backgrounds || !fontColors || !mergedCells) {
+        console.error('Invalid data structure:', data);
+        return;
+      }
+
       const table = document.getElementById('data-table');
       const fragment = document.createDocumentFragment();
 
