@@ -76,12 +76,16 @@
         row.forEach((cell, colIndex) => {
           if (!mergeMap[`${rowIndex + 1}-${colIndex + 1}`] || (rowIndex + 1 === mergeMap[`${rowIndex + 1}-${colIndex + 1}`].row && colIndex + 1 === mergeMap[`${rowIndex + 1}-${colIndex + 1}`].column)) {
             const td = document.createElement('td');
-            const cellData = tableData[rowIndex][colIndex];
+            const cellData = tableData[rowIndex][colIndex] || '';
             td.innerHTML = cellData.replace(/<a /g, '<a target="_parent" ');
 
             // 셀 배경색과 글꼴 색상 적용
-            td.style.backgroundColor = backgrounds[rowIndex][colIndex];
-            td.style.color = fontColors[rowIndex][colIndex];
+            if (backgrounds[rowIndex] && backgrounds[rowIndex][colIndex]) {
+              td.style.backgroundColor = backgrounds[rowIndex][colIndex];
+            }
+            if (fontColors[rowIndex] && fontColors[rowIndex][colIndex]) {
+              td.style.color = fontColors[rowIndex][colIndex];
+            }
 
             if (mergeMap[`${rowIndex + 1}-${colIndex + 1}`]) {
               const mergeInfo = mergeMap[`${rowIndex + 1}-${colIndex + 1}`];
