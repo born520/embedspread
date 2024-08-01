@@ -41,7 +41,7 @@
 
     async function fetchData() {
       try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbzrPN92MV5aaIouBkIhPj4dfp9UffW27c6i68KyotVhfVcy8GwCO_Km7C2cU3iLd8NS/exec');
+        const response = await fetch('https://script.google.com/macros/s/AKfycbzrJN5k_z4zZaH9oR8SQqL9V3CvbF82OS38DWPqje11T6vzr0j29Te09edqj1UCkann/exec');
         const result = await response.json();
         console.log('Fetched data:', result); // JSON 데이터 구조 확인
         localStorage.setItem('sheetData', JSON.stringify(result));
@@ -57,13 +57,12 @@
         console.error('Error in data:', data.error);
         return;
       }
-      const { tableData, backgrounds, fontColors, mergedCells } = data;
+      const { tableData, backgrounds, fontColors } = data;
       console.log('Data:', tableData);
       console.log('Backgrounds:', backgrounds);
       console.log('FontColors:', fontColors);
-      console.log('MergedCells:', mergedCells);
 
-      if (!tableData || !backgrounds || !fontColors || !mergedCells) {
+      if (!tableData || !backgrounds || !fontColors) {
         console.error('Invalid data structure:', data);
         return;
       }
@@ -71,38 +70,22 @@
       const table = document.getElementById('data-table');
       const fragment = document.createDocumentFragment();
 
-      const mergeMap = {};
-      mergedCells.forEach(cell => {
-        mergeMap[`${cell.row}-${cell.column}`] = cell;
-      });
-
       tableData.forEach((row, rowIndex) => {
         const tr = document.createElement('tr');
         row.forEach((cell, colIndex) => {
-          if (!mergeMap[`${rowIndex + 1}-${colIndex + 1}`] || (rowIndex + 1 === mergeMap[`${rowIndex + 1}-${colIndex + 1}`].row && colIndex + 1 === mergeMap[`${rowIndex + 1}-${colIndex + 1}`].column)) {
-            const td = document.createElement('td');
-            const cellData = tableData[rowIndex][colIndex] || '';
-            td.innerHTML = cellData.replace(/<a /g, '<a target="_parent" ');
+          const td = document.createElement('td');
+          const cellData = tableData[rowIndex][colIndex] || '';
+          td.innerHTML = cellData.replace(/<a /g, '<a target="_parent" ');
 
-            // 셀 배경색과 글꼴 색상 적용
-            if (backgrounds[rowIndex] && backgrounds[rowIndex][colIndex]) {
-              td.style.backgroundColor = backgrounds[rowIndex][colIndex];
-            }
-            if (fontColors[rowIndex] && fontColors[rowIndex][colIndex]) {
-              td.style.color = fontColors[rowIndex][colIndex];
-            }
-
-            if (mergeMap[`${rowIndex + 1}-${colIndex + 1}`]) {
-              const mergeInfo = mergeMap[`${rowIndex + 1}-${colIndex + 1}`];
-              if (mergeInfo.numRows > 1) {
-                td.rowSpan = mergeInfo.numRows;
-              }
-              if (mergeInfo.numColumns > 1) {
-                td.colSpan = mergeInfo.numColumns;
-              }
-            }
-            tr.appendChild(td);
+          // 셀 배경색과 글꼴 색상 적용
+          if (backgrounds[rowIndex] && backgrounds[rowIndex][colIndex]) {
+            td.style.backgroundColor = backgrounds[rowIndex][colIndex];
           }
+          if (fontColors[rowIndex] && fontColors[rowIndex][colIndex]) {
+            td.style.color = fontColors[rowIndex][colIndex];
+          }
+
+          tr.appendChild(td);
         });
         fragment.appendChild(tr);
       });
