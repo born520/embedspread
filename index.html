@@ -41,7 +41,7 @@
 
     async function fetchData() {
       try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbzrJN5k_z4zZaH9oR8SQqL9V3CvbF82OS38DWPqje11T6vzr0j29Te09edqj1UCkann/exec');
+        const response = await fetch('https://script.google.com/macros/s/AKfycbxxhGupJvhCC0E5T5NuVNuFdhVrnisZCSJu9GrEGGyZ1gfSpanpnkGjAhJW9JSr_xuI/exec');
         const result = await response.json();
         console.log('Fetched data:', result); // JSON 데이터 구조 확인
         localStorage.setItem('sheetData', JSON.stringify(result));
