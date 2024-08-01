@@ -29,7 +29,12 @@
       const cachedData = localStorage.getItem('sheetData');
       if (cachedData) {
         console.log('Rendering cached data...');
-        renderTable(JSON.parse(cachedData));
+        try {
+          const parsedData = JSON.parse(cachedData);
+          renderTable(parsedData);
+        } catch (error) {
+          console.error('Error parsing cached data:', error);
+        }
       }
       fetchData();
     });
